@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proximity - Locales</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #000;
+        }
+
+        /* ============ BACKGROUND IMAGE (BLURRED HD) ============ */
+        .page-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .page-bg-image {
+            position: absolute;
+            top: -25px;
+            left: -25px;
+            right: -25px;
+            bottom: -25px;
+            background-image: url('images/bg-cali.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            filter: blur(6px) brightness(0.85) saturate(1.15);
+            transform: scale(1.04);
+        }
+
+        .page-bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(20, 35, 55, 0.45) 0%, rgba(42, 157, 143, 0.18) 50%, rgba(15, 23, 42, 0.5) 100%);
+        }
+
+        /* ============ MAIN PAGE SECTION ============ */
+        .locales-page {
+            position: relative;
+            width: 100%;
+            flex: 1;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+            padding-bottom: 60px;
+            z-index: 1;
+        }
+
+        /* ============ DECORATIVE ORGANIC SHAPES ============ */
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ============ NAVBAR ============ */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 50px;
+            background: rgba(255, 255, 255, 0.22);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 55px;
+        }
+
+        .logo-text {
+            font-size: 30px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-links {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+            background: rgba(255, 255, 255, 0.28);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 40px;
+            padding: 5px 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            z-index: 1;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #1a2a3a;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 8px 18px;
+            border-radius: 25px;
+            transition: all 0.25s ease;
+            display: inline-block;
+        }
+
+        .nav-links li a:hover {
+            color: #0f766e;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .nav-links li a.active {
+            color: #ffffff;
+            background: rgba(42, 157, 143, 0.85);
+            font-weight: 600;
+            box-shadow: 0 3px 12px rgba(42, 157, 143, 0.35);
+        }
+
+        /* ============ LOCALES GRID ============ */
+        .locales-container {
+            position: relative;
+            z-index: 10;
+            max-width: 1250px;
+            margin: 40px auto 0 auto;
+            padding: 0 40px;
+            width: 100%;
+        }
+
+        .locales-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            column-gap: 32px;
+            row-gap: 45px;
+        }
+
+        .local-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.25s ease, opacity 0.5s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-radius: 14px;
+            padding: 10px 10px 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .local-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .local-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            border-color: rgba(255, 255, 255, 0.65);
+        }
+
+        .img-wrapper {
+            width: 100%;
+            aspect-ratio: 1.2 / 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: #d8e2e8;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .local-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 1.35;
+            max-width: 240px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ============ CARD HASHTAGS ============ */
+        .card-hashtags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 8px;
+            max-width: 240px;
+        }
+
+        .card-hashtag {
+            font-size: 10px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.85);
+            background: rgba(42, 157, 143, 0.35);
+            padding: 2px 8px;
+            border-radius: 10px;
+            letter-spacing: 0.3px;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .local-card:hover .card-hashtag {
+            background: rgba(42, 157, 143, 0.55);
+            color: #fff;
+        }
+
+        /* Card Hours Badge */
+        .card-hours-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 8px;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: #5a4e3a;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 3px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(200, 180, 130, 0.4);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(4px);
+            transition: all 0.25s ease;
+        }
+
+        .card-hours-badge .hours-icon {
+            font-size: 12px;
+            line-height: 1;
+        }
+
+        .local-card:hover .card-hours-badge {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(200, 180, 130, 0.65);
+        }
+
+        /* Card Distance Badge */
+        .card-distance-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #1a7a6d;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(42, 157, 143, 0.35);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+            transition: all 0.25s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .card-distance-badge .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #2a9d8f;
+            display: inline-block;
+        }
+
+        .local-card:hover .card-distance-badge {
+            background: #2a9d8f;
+            color: #ffffff;
+            border-color: #2a9d8f;
+        }
+
+        .local-card:hover .card-distance-badge .badge-dot {
+            background: #ffffff;
+        }
+
+        /* ============ USER LOCATION BAR ============ */
+        .user-location-bar {
+            max-width: 1200px;
+            width: calc(100% - 100px);
+            margin: 20px auto 10px;
+            padding: 14px 22px;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .user-location-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .user-location-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .user-location-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .user-location-text {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #1a2a3a;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+
+        .user-location-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .btn-location-action {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #2c3e50;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-location-action:hover {
+            background: #2a9d8f;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        /* ============ MODAL OVERLAY ============ */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* ============ MODAL CARD ============ */
+        .modal-card {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(25px) saturate(170%);
+            -webkit-backdrop-filter: blur(25px) saturate(170%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 720px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            transform: scale(0.85) translateY(30px);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+            opacity: 0;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        /* Close button */
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.55);
+            color: #1a2a3a;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+            transition: background 0.2s, transform 0.2s, color 0.2s;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.95);
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        /* Modal banner (small photo with store name) */
+        .modal-banner {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px 20px 0 0;
+            background: #1a1a2e;
+        }
+
+        .modal-banner-img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+            opacity: 0.85;
+        }
+
+        .modal-banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.25) 100%);
+            display: flex;
+            align-items: center;
+            padding: 0 28px;
+        }
+
+        .modal-banner-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            letter-spacing: 0.5px;
+        }
+
+        /* Modal image */
+        .modal-image-wrapper {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #d8e2e8;
+            position: relative;
+        }
+
+        .modal-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Gradient overlay on image bottom */
+        .modal-image-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(transparent, rgba(255, 255, 255, 0.6));
+            pointer-events: none;
+        }
+
+        /* Modal body */
+        .modal-body {
+            padding: 28px 32px 32px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .modal-category {
+            font-size: 13px;
+            font-weight: 500;
+            color: #6b7c93;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-category-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #2a9d8f;
+            display: inline-block;
+        }
+
+        .modal-divider {
+            width: 100%;
+            height: 1px;
+            background: #e8ecf1;
+            margin-bottom: 18px;
+        }
+
+        .modal-description {
+            font-size: 14px;
+            font-weight: 400;
+            color: #4a5568;
+            line-height: 1.75;
+            margin-bottom: 24px;
+        }
+
+        /* Info tags */
+        .modal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .modal-tag {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            background: linear-gradient(135deg, #e8f4f2, #d4ede8);
+            color: #1a7a6d;
+            letter-spacing: 0.3px;
+        }
+
+        /* Modal Hours Box */
+        .modal-hours-box {
+            background: rgba(254, 249, 235, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(232, 217, 168, 0.85);
+            border-radius: 14px;
+            padding: 14px 18px;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .modal-hours-icon {
+            font-size: 22px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .modal-hours-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #7a6b45;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+        }
+
+        .modal-hours-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: #3d3422;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* Modal Proximity Box */
+        .modal-proximity-box {
+            background: rgba(240, 248, 246, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(188, 227, 220, 0.85);
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin-bottom: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .proximity-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .proximity-icon {
+            font-size: 22px;
+            line-height: 1;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .proximity-address {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #1a2a3a;
+            display: block;
+        }
+
+        .proximity-distance {
+            font-size: 13px;
+            color: #2c3e50;
+            margin-top: 3px;
+            display: block;
+        }
+
+        .proximity-distance strong {
+            color: #0f766e;
+            font-weight: 700;
+        }
+
+        .proximity-note {
+            font-size: 11px;
+            color: #627d8e;
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+
+        /* Google Maps button group */
+        .modal-buttons-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 6px;
+            width: 100%;
+        }
+
+        .modal-maps-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 13px 24px;
+            background: linear-gradient(135deg, #4285F4, #3367D6);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 14.5px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.35);
+            letter-spacing: 0.3px;
+        }
+
+        .modal-maps-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(66, 133, 244, 0.5);
+        }
+
+        .modal-maps-btn:active {
+            transform: translateY(0);
+        }
+
+        .modal-maps-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .modal-streetview-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 11px 20px;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #2c3e50;
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .modal-streetview-btn:hover {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            color: #1a2a3a;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .modal-streetview-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            background: #000000;
+            padding: 22px 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 12px;
+            font-weight: 500;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 1024px) {
+            .locales-grid {
+                grid-template-columns: repeat(3, 1fr);
+                row-gap: 35px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            nav {
+                flex-direction: column;
+                gap: 12px;
+                padding: 14px 20px;
+            }
+
+            .nav-links {
+                position: static;
+                transform: none;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 4px;
+                padding: 4px 8px;
+            }
+
+            .nav-links li a {
+                padding: 6px 14px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .locales-grid {
+                grid-template-columns: repeat(2, 1fr);
+                column-gap: 20px;
+                row-gap: 30px;
+            }
+
+            .locales-container {
+                padding: 0 20px;
+            }
+
+            .modal-card {
+                width: 95%;
+                max-width: 500px;
+            }
+
+            .modal-body {
+                padding: 20px 22px 26px;
+            }
+
+            .modal-title {
+                font-size: 20px;
+            }
+
+            .modal-banner-name {
+                font-size: 18px;
+            }
+
+            .modal-banner-img {
+                height: 90px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .locales-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-card {
+                width: 96%;
+                border-radius: 14px;
+            }
+
+            .modal-banner {
+                border-radius: 14px 14px 0 0;
+            }
+
+            .modal-banner-name {
+                font-size: 16px;
+            }
+
+            .modal-banner-img {
+                height: 75px;
+            }
+        }
+
+        /* Scrollbar styling for modal */
+        .modal-card::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-card::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .modal-card::-webkit-scrollbar-thumb {
+            background: #c4cdd5;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============ BACKGROUND IMAGE (BLURRED HD) ============ -->
+    <div class="page-bg" aria-hidden="true">
+        <div class="page-bg-image"></div>
+        <div class="page-bg-overlay"></div>
+    </div>
+
+    <section class="locales-page">
+
+        <!-- Decorative organic shapes -->
+        <svg class="bg-shapes" viewBox="0 0 1200 700" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M-50,80 Q100,20 200,120 Q300,220 250,350 Q200,480 50,400 Q-100,320 -80,200 Z" fill="none"
+                stroke="rgba(140,165,185,0.4)" stroke-width="2.5" />
+            <path d="M-30,500 Q150,300 350,380 Q550,460 700,300 Q850,140 950,250 Q1050,360 1200,280" fill="none"
+                stroke="rgba(140,165,185,0.35)" stroke-width="2" />
+            <path d="M900,50 Q950,150 1050,100 Q1150,50 1100,-20" fill="none" stroke="rgba(140,165,185,0.3)"
+                stroke-width="2" />
+            <path d="M100,650 Q400,550 600,620 Q800,690 1100,580" fill="none" stroke="rgba(140,165,185,0.25)"
+                stroke-width="2" />
+            <path d="M80,180 Q180,80 320,160 Q400,220 350,340 Q280,440 150,380 Q40,300 80,180 Z"
+                fill="rgba(150,175,195,0.15)" stroke="rgba(140,165,185,0.3)" stroke-width="1.5" />
+            <path d="M600,150 Q750,50 900,120 Q1050,200 1200,100" fill="none" stroke="rgba(140,165,185,0.3)"
+                stroke-width="2" />
+            <path d="M450,400 Q650,250 850,350 Q1050,450 1250,300" fill="none" stroke="rgba(140,165,185,0.25)"
+                stroke-width="2" />
+        </svg>
+
+        <!-- Navigation -->
+        <nav>
+            <div class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));">
+                    <!-- Left Person (Head & Left Heart/Leg) -->
+                    <circle cx="33" cy="20" r="7.5" fill="#143d34" />
+                    <path d="M 50,43 C 41,31 22,32 15,45 C 7,59 13,74 35,82 C 43,85 48,79 50,73 C 53,66 61,84 72,99"
+                          fill="none" stroke="#143d34" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" />
+                          
+                    <!-- Right Person (Head & Right Heart/Leg) -->
+                    <circle cx="67" cy="20" r="7.5" fill="#1f574b" />
+                    <path d="M 50,43 C 59,31 78,32 85,45 C 93,59 87,74 65,82 C 57,85 52,79 50,73 C 47,66 39,84 28,99"
+                          fill="none" stroke="#1f574b" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="logo-text">Proximity</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">INICIO</a></li>
+                <li><a href="locales.html" class="active">LOCALES</a></li>
+                <li><a href="sobre-nosotros.html">SOBRE NOSOTROS</a></li>
+            </ul>
+        </nav>
+
+        <!-- User Location Bar -->
+        <div class="user-location-bar" id="userLocationBar">
+            <div class="user-location-info">
+                <span class="user-location-icon">📍</span>
+                <div>
+                    <span class="user-location-label">Tu ubicación guardada para el mapa:</span>
+                    <strong class="user-location-text" id="userLocationText">Calculando ruta según tu
+                        ubicación...</strong>
+                </div>
+            </div>
+            <div class="user-location-actions">
+                <button type="button" class="btn-location-action" id="btnChangeLocation">✏️ Cambiar</button>
+                <button type="button" class="btn-location-action" id="btnGpsLocales">🎯 Usar GPS</button>
+            </div>
+        </div>
+
+        <!-- Grid of Locales -->
+        <div class="locales-container">
+            <div class="locales-grid" id="localesGrid">
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <span class="footer-text">Proximity.co</span>
+    </footer>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-card" id="modalCard">
+            <button class="modal-close" id="modalClose" aria-label="Cerrar">&times;</button>
+            <!-- Banner with small photo and store name -->
+            <div class="modal-banner" id="modalBanner">
+                <img class="modal-banner-img" id="modalBannerImg" src="" alt="">
+                <div class="modal-banner-overlay">
+                    <span class="modal-banner-name" id="modalBannerName"></span>
+                </div>
+            </div>
+            <div class="modal-image-wrapper">
+                <img id="modalImage" src="" alt="">
+            </div>
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-category">
+                    <span class="modal-category-dot"></span>
+                    <span id="modalCategory"></span>
+                </div>
+                <div class="modal-divider"></div>
+                <p class="modal-description" id="modalDescription"></p>
+                <div class="modal-tags" id="modalTags"></div>
+
+                <!-- Proximity Box -->
+                <div class="modal-proximity-box" id="modalProximityBox">
+                    <div class="proximity-header">
+                        <span class="proximity-icon">📍</span>
+                        <div style="flex: 1;">
+                            <span class="proximity-address" id="modalAddress">Dirección</span>
+                            <span class="proximity-distance" id="modalDistance">Calculando qué tan cerca estás...</span>
+                            <div class="proximity-note" id="modalProximityNote">Al abrir Google Maps verás la ruta
+                                directa, tiempo de llegada y distancia exacta desde tu ubicación.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-buttons-group">
+                    <a class="modal-maps-btn" id="modalMapsBtn" href="#" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
+                        </svg>
+                        <span id="modalMapsBtnText">Ver ruta y qué tan lejos estás en Google Maps</span>
+                    </a>
+                    <a class="modal-streetview-btn" id="modalStreetViewBtn"
+                        href="https://www.google.com/maps/@3.4764675,-76.493484,957a,75y,247.92h,65.82t/data=!3m7!1e1!3m5!1shSr4zPfCV5dROYD46b6M9g!2e0!6shttps:%2F%2Fstreetviewpixels-pa.clients6.google.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D24.179675560371408%26panoid%3DhSr4zPfCV5dROYD46b6M9g%26yaw%3D247.91723605063032!7i13312!8i6656?entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D"
+                        target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                        </svg>
+                        <span>Ver en Google Maps (Street View 360°)</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Location Modal -->
+    <div class="modal-overlay" id="locationModalOverlay">
+        <div class="modal-card" style="max-width: 440px; padding: 26px 28px;">
+            <button class="modal-close" id="locationModalClose" aria-label="Cerrar">&times;</button>
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 6px; color: #1a2a3a;">📍 Tu ubicación</h3>
+            <p style="font-size: 13px; color: #555; margin-bottom: 16px; line-height: 1.5;">
+                Ingresa tu dirección o usa el GPS para que Google Maps te muestre qué tan cerca o lejos estás de cada
+                local.
+            </p>
+            <input type="text" id="manualLocationInput" placeholder="Ej: Cra. 62 #10-20, Cali"
+                style="width: 100%; padding: 12px 14px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 13px; margin-bottom: 16px; outline: none;">
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button type="button" id="btnGpsModal" class="btn-location-action"
+                    style="background: #e8f4f2; color: #1a7a6d;">🎯 Usar GPS</button>
+                <button type="button" id="btnSaveManualLocation" class="btn-location-action"
+                    style="background: #2a9d8f; color: #fff;">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========= DATA: All stores with real images and coordinates =========
+        const localesData = [
+            {
+                id: 1,
+                nombre: "Gane Servicios/SuperGIROS",
+                imagen: "images/locales/gane-fachada-new.jpeg",
+                banner: "images/locales/gane-fachada-new.jpeg",
+                categoria: "Servicios financieros y giros",
+                descripcion: "Gane es tu local de red multiservicios y de apuestas donde puedes pagar servicios, apuestas, y recaudos, también con el wester union hacer transacciones y recargas de datos y minutos.",
+                tags: ["#SuperGIROS", "#GaneServicios", "#WesternUnion", "#Giros", "#Pagos", "#Recargas", "#Apuestas", "#Recaudos"],
+                direccion: "Cra. 62 #11-20, Cali",
+                horario: "9:00 AM - 6:00 PM",
+                lat: 3.4766482,
+                lng: -76.493418,
+                mapsUrl: "https://maps.app.goo.gl/Bu9skkGydNPVALFJ9",
+                mapsQuery: "SuperGIROS+Gane+Servicios+Cra+62+Cali"
+            },
+            {
+                id: 2,
+                nombre: "Elixir Essence – Perfumería, Bisutería y Maquillaje",
+                imagen: "images/locales/elixir-fachada-new.jpeg",
+                banner: "images/locales/elixir-fachada-new.jpeg",
+                categoria: "Perfumería, bisutería y belleza",
+                descripcion: "Elixir Essence ofrece una exclusiva selección de perfumería fina, bisutería de tendencia y productos de maquillaje de alta calidad. Además, contamos con servicio profesional de perforación de orejas con total higiene.",
+                tags: ["#ElixirEssence", "#Perfumería", "#Bisutería", "#Maquillaje", "#PerforaciónOrejas", "#Belleza"],
+                direccion: "Cra. 62 #10-45, Cali",
+                horario: "4:00 PM - 8:00 PM",
+                lat: 3.476759,
+                lng: -76.4933904,
+                mapsUrl: "https://maps.app.goo.gl/DHZjkUNtT11UUzgXA",
+                mapsQuery: "Elixir+Essence+perfumeria+Cra+62+Cali"
+            },
+            {
+                id: 3,
+                nombre: "Restaurante José & Salo",
+                imagen: "images/locales/asados-jose-y-salo-fachada.jpg",
+                banner: "images/locales/asados-jose-y-salo-banner.jpg",
+                categoria: "Restaurante y asados",
+                descripcion: "El restaurante José & Salo ofrece los mejores asados al carbón, pollo asado, jugosos cortes de carne a la brasa, ademas contamos con romociones en hamburguesas, perros calientes, salchipapas y demas combos para compartir con tus amigos o familiares, tambien puedes disfrutar de un delicioso menu del dia. Ven a disfrutar de una experiencia gastronómica.",
+                tags: ["#Asados", "#Comida", "#Menu", "#Hamburguesas", "#PerrosCalientes", "#Salchipapas", "#Combos", "#Almuerzos"],
+                direccion: "Cra. 62 #11-10, Cali",
+                horario: "4:00 PM - 10:00 PM",
+                lat: 3.476759,
+                lng: -76.4933904,
+                mapsUrl: "https://maps.app.goo.gl/DHZjkUNtT11UUzgXA",
+                mapsQuery: "Restaurante+Jose+y+Salo+Cra+62+Cali"
+            },
+            {
+                id: 4,
+                nombre: "Chimi Chill",
+                imagen: "images/locales/chim-chill-fachada.jpg",
+                banner: "images/locales/chim-chill-banner.jpg",
+                categoria: "Cócteles, bebidas y licores",
+                descripcion: "Chimi Chill es el mejor punto de encuentro nocturno para compartir con amigos. Disfruta de deliciosos cócteles artesanales como Sunny Chill (Piña, Maracuyá, Vodka), Green Bliss (Lulo, Limón, Tequila), Tropical Mix (Mango, Maracuyá) y Chill Boom.",
+                tags: ["#ChimiChill", "#Cócteles", "#SunnyChill", "#GreenBliss", "#Bebidas", "#Amigos"],
+                direccion: "Cra. 62 #11-15, Cali",
+                horario: "6:30 PM - 11:30 PM",
+                lat: 3.4786063,
+                lng: -76.492974,
+                mapsUrl: "https://maps.app.goo.gl/Z6qXY8JpKPUAbAjo8",
+                mapsQuery: "Chimi+Chill+cocteles+Cra+62+Cali"
+            },
+            {
+                id: 5,
+                nombre: "2x1 Burger",
+                imagen: "images/locales/2x1-burger-fachada.jpg",
+                banner: "images/locales/2x1-burger-banner.jpg",
+                categoria: "Hamburguesas y comidas rápidas",
+                descripcion: "2x1 Burger es la hamburguesería preferida de la zona, famosa por sus promociones permanentes 2x1 en hamburguesas jugosas, papas crujientes, combos y bebidas, tambien por vender comida callejera a buen recio y deleitar a los clientes con nuestros combos. Pide también a través de DiDi Food.",
+                tags: ["#2x1Burger", "#Hamburguesas", "#Hamburgueseria", "#Combos", "#ComidasRápidas", "#Comidacallejera"],
+                direccion: "Cra. 62 #10-80, Cali",
+                horario: "4:00 PM - 11:30 PM",
+                lat: 3.4769481,
+                lng: -76.4933483,
+                mapsUrl: "https://maps.app.goo.gl/vSDsJeSyBCoMP9do9",
+                mapsQuery: "2x1+Burger+Cra+62+Cali"
+            },
+            {
+                id: 6,
+                nombre: "Víveres y Licores JC",
+                imagen: "images/locales/07-viveres-y-licores-jc.jpg",
+                banner: "images/locales/viveres-y-licores-jc-banner.jpg",
+                categoria: "Tienda y licoreria",
+                descripcion: "Víveres y Licores JC es tu tienda y licorería de confianza, donde encuentras lo que necesitas para tu hogar y para tu dia a dia con productos de todo tipo y ademas tenemos para ti una amplia variedad de cervezas frías, licores nacionales e importados, pasabocas y abarrotes de primera necesidad.",
+                tags: ["#LicoresJC", "#Hogar", "#Tienda", "#Cerveza", "#Licor", "#Abarrotes", "#Pasabocas", "#Aseo", "#Bebidas", "#Embutidos", "#ProductosDeLimpieza", "#Dulces"],
+                direccion: "Cra. 62 #10-85, Cali",
+                horario: "8:00 AM - 12:00 AM",
+                lat: 3.4770404,
+                lng: -76.4933272,
+                mapsUrl: "https://maps.app.goo.gl/ajM82EBmmHyQ3e7c7",
+                mapsQuery: "Viveres+y+Licores+JC+Cra+62+Cali"
+            },
+            {
+                id: 7,
+                nombre: "Mascotas El Campesino",
+                imagen: "images/locales/mascotas-el-campesino-fachada.jpg",
+                banner: "images/locales/14-mascotas-el-campesino.jpg",
+                categoria: "Tienda de mascotas",
+                descripcion: "Mascotas El Campesino es un local dedicado al cuidado animal con alimentos, medicamentos, accesorios y productos de higiene. Todo para tu mascota con domicilios al 312 227 0320.",
+                tags: ["#Mascotas", "#Alimentos", "#Medicamentos", "#Accesorios", "#Domicilios"],
+                direccion: "Cra. 62 #11-35, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.47979,
+                lng: -76.4927103,
+                mapsUrl: "https://maps.app.goo.gl/a2La2WfszTFJVJZP7",
+                mapsQuery: "Mascotas+El+Campesino+Cra+62+Cali"
+            },
+            {
+                id: 8,
+                nombre: "Brooklyn Barber Shop",
+                imagen: "images/locales/brooklyn-barber-fachada.jpg",
+                banner: "images/locales/brooklyn-barber-logo.jpg",
+                categoria: "Barbería",
+                descripcion: "Brooklyn Barber Shop es una barbería con estilo urbano y moderno. Peluquería caballero con los mejores cortes de cabello, arreglo de barba y estilo personalizado.",
+                tags: ["#Barbería", "#Cortes", "#Barba", "#EstiloUrbano", "#Peluquería"],
+                direccion: "Cra. 62 #10-70, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.4790931,
+                lng: -76.4928684,
+                mapsUrl: "https://maps.app.goo.gl/2hdaWNfhoQ4w1WcC9",
+                mapsQuery: "Brooklyn+Barber+Shop+Cra+62+Cali"
+            },
+            {
+                id: 9,
+                nombre: "#TBT Burger",
+                imagen: "images/locales/tbt-burger-fachada.jpg",
+                banner: "images/locales/tbt-burger-logo.jpg",
+                categoria: "Hamburguesas",
+                descripcion: "#TBT Burger trae el sabor de las hamburguesas artesanales con ingredientes frescos y combinaciones creativas. Un recuerdo en cada ingrediente y en cada uno de los que la prueban.",
+                tags: ["#Hamburguesas", "#Artesanal", "#ComidaRica", "#BurgerLovers", "#ComidaCallejera"],
+                direccion: "Cra. 62 #11-05, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.4769481,
+                lng: -76.4933483,
+                mapsUrl: "https://maps.app.goo.gl/vSDsJeSyBCoMP9do9",
+                mapsQuery: "TBT+Burger+Cra+62+Cali"
+            },
+            {
+                id: 10,
+                nombre: "Frutas y Verduras El Mono W",
+                imagen: "images/locales/frutas-verduras-mono-w-fachada.jpg",
+                banner: "images/locales/frutas-verduras-mono-w-banner.jpg",
+                categoria: "Fruver",
+                descripcion: "Frutas y Verduras El Mono W te ofrece los productos más frescos del campo directo a tu mesa. Domicilios al 311-390-1974.",
+                tags: ["#Frutas", "#Verduras", "#Frescas", "#Campo", "#Domicilios"],
+                direccion: "Cra. 62 #10-60, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.4795,
+                lng: -76.4927768,
+                mapsUrl: "https://maps.app.goo.gl/qpNR3RsQzzhrNvwv7",
+                mapsQuery: "Frutas+y+Verduras+El+Mono+W+Cra+62+Cali"
+            },
+            {
+                id: 11,
+                nombre: "Más Que Pan",
+                imagen: "images/locales/mas-que-pan-fachada.jpg",
+                banner: "images/locales/mas-que-pan-banner.jpg",
+                categoria: "Panadería y pastelería",
+                descripcion: "Más Que Pan es una panadería y pastelería que va más allá del pan tradicional. Encuentra pasteles, tortas, galletas y mucho más. ¡Más que Rico!",
+                tags: ["#Panadería", "#Pastelería", "#Tortas", "#PanArtesanal", "#MásQueRico"],
+                direccion: "Cra. 62 #11-40, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.4790931,
+                lng: -76.4928684,
+                mapsUrl: "https://maps.app.goo.gl/PZnvzTVvLWj5qps87",
+                mapsQuery: "Mas+Que+Pan+panaderia+Cra+62+Cali"
+            },
+            {
+                id: 12,
+                nombre: "Drogas Al Kosto",
+                imagen: "images/locales/drogas-al-kosto-fachada.jpg",
+                banner: "images/locales/drogas-al-kosto-banner.jpg",
+                categoria: "Farmacia",
+                descripcion: "Drogas Al Kosto es tu farmacia de confianza con servicios de farmacia, perfumería, productos de aseo personal y mas. Medicamentos genéricos y de marca a precios económicos.",
+                tags: ["#Farmacia", "#Medicamentos", "#Perfumería", "#Salud", "#Económico", "#AseoPersonal", "#Cosmeticos"],
+                direccion: "Cra. 62 #10-50, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.479682,
+                lng: -76.4927342,
+                mapsUrl: "https://maps.app.goo.gl/AnJ5jC2FAhK9Rc5i7",
+                mapsQuery: "Drogas+Al+Kosto+Cra+62+Cali"
+            },
+            {
+                id: 13,
+                nombre: "Huellitas Pet Shop – Peluquería Canina",
+                imagen: "images/locales/huellitas-peluqueria-canina-fachada.jpg",
+                banner: "images/locales/huellitas-peluqueria-canina-banner.jpg",
+                categoria: "Cuidado de mascotas",
+                descripcion: "Huellitas Pet Shop ofrece servicios de peluquería canina profesional: baño medicado, baño hipoalergénico, corte según la raza, cepillado dental, limpieza de oídos y más. Llama al 300 325 6091.",
+                tags: ["#PeluqueríaCanina", "#BañoMedicado", "#Grooming", "#Mascotas", "#HuellitasPetShop"],
+                direccion: "Cra. 62 #11-25, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.47979,
+                lng: -76.4927103,
+                mapsUrl: "https://maps.app.goo.gl/BF39EoqwHyKvv2xD8",
+                mapsQuery: "Huellitas+Pet+Shop+Cra+62+Cali"
+            },
+            {
+                id: 14,
+                nombre: "El Punto de las Tortas",
+                imagen: "images/locales/el-punto-tortas-fachada.jpg",
+                banner: "images/locales/el-punto-tortas-banner.jpg",
+                categoria: "Repostería",
+                descripcion: "El Punto de las Tortas es especialista en tortas decoradas para toda ocasión. Pedidos al 314 620 4182. Síguenos en @EL PUNTO DE LAS TORTAS.",
+                tags: ["#Tortas", "#Cumpleaños", "#Repostería", "#Eventos", "#TortasDecoradas"],
+                direccion: "Cra. 62 #10-90, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.479006,
+                lng: -76.4928852,
+                mapsUrl: "https://maps.app.goo.gl/rk65KuKs61txQzvC9",
+                mapsQuery: "El+Punto+de+las+Tortas+Cra+62+Cali"
+            },
+            {
+                id: 15,
+                nombre: "Distrimascotas",
+                imagen: "images/locales/distrimascotas-fachada.jpg",
+                banner: "images/locales/distrimascotas-banner.jpg",
+                categoria: "Distribuidor de mascotas",
+                descripcion: "Distrimascotas es un distribuidor mayorista y minorista de alimentos y accesorios para mascotasde todo tipo, con ropa, comida, productos de limpieza, arena, implementos de aseo, pipetas, collares, correas, juguetes, bozal, guantes, entre otros. Con amor desde Cali, Colombia.",
+                tags: ["#Concentrados", "#Mascotas", "#Distribuidor", "#Accesorios", "#ConAmor", "#RopaPet", "#AseoMascotas", "#Juguetes", "#Collares", "#Correas", "#Bozal", "#Guantes", "#Arena", "#ComidaMascotas", "#Snacks", "#Pipetas", "#ImplementosAseo", "#RopaMascotas", "#JuguetesMascotas", "#CollaresMascotas", "#CorreasMascotas", "#BozalMascotas", "#GuantesMascotas", "#ArenaMascotas", "#ComidaMascotas"],
+                direccion: "Cra. 62 #11-45, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.479006,
+                lng: -76.4928852,
+                mapsUrl: "https://maps.app.goo.gl/pazePwSPrWnnUTMb9",
+                mapsQuery: "Distrimascotas+Cra+62+Cali"
+            },
+            {
+                id: 16,
+                nombre: "Ferreconomía LA 62",
+                imagen: "images/locales/ferreconomia-la-62-fachada.jpg",
+                banner: "images/locales/ferreconomia-la-62-banner.jpg",
+                categoria: "Ferretería",
+                descripcion: "Ferreconomía LA 62 es tu ferretería de barrio con herramientas, materiales de construcción, pinturas y artículos eléctricos y tecnologicos para el arreglo de tu hogar y espacio.",
+                tags: ["#Herramientas", "#Construcción", "#Pinturas", "#Ferretería", "#Eléctricos", "#Tecnologicos", "#Hogar", "#MaterialesConstruccion", "#PinturasPintuco"],
+                direccion: "Cra. 62 #10-30, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.4789102,
+                lng: -76.4929041,
+                mapsUrl: "https://maps.app.goo.gl/xmTub6R7QYZYiiBy6",
+                mapsQuery: "Ferreconomia+LA+62+Cra+62+Cali"
+            },
+            {
+                id: 17,
+                nombre: "Tienda Mercardona",
+                imagen: "images/locales/tienda-mercardona-fachada.jpg",
+                banner: "images/locales/tienda-mercardona-banner.jpg",
+                categoria: "Minimarket",
+                descripcion: "Tienda Mercardona es un minimarket surtido con alimentos, abarrotes, bebidas y snacks.",
+                tags: ["#Minimarket", "#Abarrotes", "#Bebidas", "#CanastaFamiliar"],
+                direccion: "Cra. 62 #11-50, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.4787083,
+                lng: -76.4929504,
+                mapsUrl: "https://maps.app.goo.gl/RxhK4GKPQTsMvHB98",
+                mapsQuery: "Tienda+Mercardona+Cra+62+Cali"
+            },
+            {
+                id: 18,
+                nombre: "Ferretería Miscelánea El Campesino",
+                imagen: "images/locales/ferreteria-el-campesino-fachada.jpg",
+                banner: "images/locales/ferreteria-el-campesino-banner.jpg",
+                categoria: "Ferretería y miscelánea",
+                descripcion: "Ferretería Miscelánea El Campesino combina lo mejor de una ferretería con la variedad de una miscelánea. Pinturas Pintuco y más.",
+                tags: ["#Ferretería", "#Miscelánea", "#Herramientas", "#Pintuco", "#Hogar"],
+                direccion: "Cra. 62 #11-18, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.4777839,
+                lng: -76.4931563,
+                mapsUrl: "https://maps.app.goo.gl/PGt3C4B3L6Q4Jf8S7",
+                mapsQuery: "Ferreteria+Miscelanea+El+Campesino+Cra+62+Cali"
+            },
+            {
+                id: 19,
+                nombre: "Color y Belleza Cosméticos",
+                imagen: "images/locales/color-y-belleza-fachada-new.jpeg",
+                banner: "images/locales/color-y-belleza-fachada-new.jpeg",
+                categoria: "Cosméticos y belleza",
+                descripcion: "Color y Belleza Cosméticos ofrece una amplia selección de tintes, tratamientos capilares y productos de belleza. Protección de color y cuidado del pelo para cualquiera.",
+                tags: ["#Tintes", "#Cosméticos", "#TratamientosCapilares", "#Belleza", "#CuidadoDelPelo", "#Cosmeticos"],
+                direccion: "Cra. 62 #10-65, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.4776806,
+                lng: -76.4931804,
+                mapsUrl: "https://maps.app.goo.gl/u26ZaZSP6nWJsVrA6",
+                mapsQuery: "Color+y+Belleza+Cosmeticos+Cra+62+Cali"
+            },
+            {
+                id: 20,
+                nombre: "LA IDEAL – Miscelánea y Papelería",
+                imagen: "images/locales/la-ideal-fachada.jpg",
+                banner: "images/locales/la-ideal-banner.jpg",
+                categoria: "Miscelánea y papelería",
+                descripcion: "LA IDEAL es una miscelánea y papelería con amplio surtido de productos para el hogar, fotocopias, juguetes y artículos de uso diario.",
+                tags: ["#Miscelánea", "#Papelería", "#Juguetes", "#Fotocopias", "#Regalos"],
+                direccion: "Cra. 62 #11-02, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.4786063,
+                lng: -76.492974,
+                mapsUrl: "https://maps.app.goo.gl/epdkENbr6dUN6USC6",
+                mapsQuery: "LA+IDEAL+tienda+Cra+62+Cali"
+            },
+            {
+                id: 21,
+                nombre: "Óptica Carvajal",
+                imagen: "images/locales/optica-carvajal-fachada.jpg",
+                banner: "images/locales/optica-carvajal-logo.jpg",
+                categoria: "Óptica y salud visual",
+                descripcion: "Óptica Carvajal ofrece examen computarizado de la vista, gafas de formulación, gafas de sol y lentes de contacto. Contáctanos al 312 822 9498.",
+                tags: ["#Óptica", "#ExamenComputarizado", "#Gafas", "#LentesDeContacto", "#SaludVisual"],
+                direccion: "Cra. 62 #10-40, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.4789102,
+                lng: -76.4929041,
+                mapsUrl: "https://maps.app.goo.gl/gDgAi9S9KVmQLTpQ6",
+                mapsQuery: "Optica+Carvajal+Cra+62+Cali"
+            },
+            {
+                id: 22,
+                nombre: "Camerina Spa – Imagen & Belleza",
+                imagen: "images/locales/camerina-spa-fachada.jpg",
+                banner: "images/locales/camerina-spa-logo.jpg",
+                categoria: "Spa y belleza",
+                descripcion: "Camerina Spa es un centro de imagen y belleza que ofrece servicios profesionales de estética, cuidado facial, tratamientos de belleza y relajación. Aceptan VISA y tarjetas.",
+                tags: ["#Spa", "#Belleza", "#Estética", "#CuidadoFacial", "#ImagenPersonal"],
+                direccion: "Cra. 62 #11-30, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.4790931,
+                lng: -76.4928684,
+                mapsUrl: "https://maps.app.goo.gl/LkMbMxqF8eXUga1Z9",
+                mapsQuery: "Camerina+Spa+Cra+62+Cali"
+            },
+            {
+                id: 23,
+                nombre: "Salsamentaria El Campesino",
+                imagen: "images/locales/salsamentaria-el-campesino-fachada.jpg",
+                banner: "images/locales/salsamentaria-el-campesino-banner.jpg",
+                categoria: "Salsamentaria",
+                descripcion: "Salsamentaria El Campesino ofrece productos de salsamentaría, embutidos, quesos, lácteos y productos Zenú de la mejor calidad.",
+                tags: ["#Salsamentaria", "#Embutidos", "#Quesos", "#Lácteos", "#Zenú"],
+                direccion: "Cra. 62 #11-12, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.479682,
+                lng: -76.4927342,
+                mapsUrl: "https://maps.app.goo.gl/UdkLbB1EuE62FXcL8",
+                mapsQuery: "Salsamentaria+El+Campesino+Cra+62+Cali"
+            },
+            {
+                id: 24,
+                nombre: "MartSol – Piñatería en General",
+                imagen: "images/locales/martsol-pinateria-fachada.jpg",
+                banner: "images/locales/martsol-pinateria-banner.jpg",
+                categoria: "Piñatería y estampados",
+                descripcion: "MartSol ofrece diseños estampados, corte láser, piñatería en general y diseños personalizados. Tarjetas, invitaciones, cajitas de madera, MDF y acrílico. Ventas al por mayor. Llama al 330 222 190.",
+                tags: ["#Piñatería", "#CorteLáser", "#Estampados", "#DiseñosPersonalizados", "#VentasAlPorMayor"],
+                direccion: "Cra. 62 #10-95, Cali",
+                horario: "8:00 AM - 8:00 PM",
+                lat: 3.479006,
+                lng: -76.4928852,
+                mapsUrl: "https://maps.app.goo.gl/UmAH5AdDeFAagQWG9",
+                mapsQuery: "MartSol+pinateria+Cra+62+Cali"
+            },
+            {
+                id: 25,
+                nombre: "2 Grados – Heladería y Postres",
+                imagen: "images/locales/2-grados-fachada.jpeg",
+                banner: "images/locales/2-grados-fachada.jpeg",
+                categoria: "Heladería y postres",
+                descripcion: "2 Grados es la heladería del barrio donde encontrarás helados artesanales, postres cremosos, malteadas y las mejores opciones para refrescarte. Sabores únicos y combinaciones irresistibles para toda la familia.",
+                tags: ["#Heladería", "#Postres", "#Helados", "#Malteadas", "#2Grados", "#Refrescante"],
+                direccion: "Cra. 62 #11-55, Cali",
+                horario: "9:00 AM - 9:00 PM",
+                lat: 3.4775775,
+                lng: -76.4932059,
+                mapsUrl: "https://maps.app.goo.gl/HXvkKsnuVfunpJpY7",
+                mapsQuery: "2+Grados+heladeria+Cra+62+Cali"
+            },
+            {
+                id: 26,
+                nombre: "Aromas y Fragancias El Perfume",
+                imagen: "images/locales/aromas-fragancias-fachada.jpeg",
+                banner: "images/locales/aromas-fragancias-fachada.jpeg",
+                categoria: "Perfumería y fragancias",
+                descripcion: "Aromas y Fragancias El Perfume es tu tienda especializada en perfumería fina, lociones, colonias y fragancias importadas y nacionales para hombre y mujer. Encuentra los mejores aromas a precios accesibles.",
+                tags: ["#Perfumería", "#Fragancias", "#Lociones", "#Colonias", "#AromasYFragancias", "#PerfumeOriginal"],
+                direccion: "Cra. 62 #10-35, Cali",
+                horario: "8:00 AM - 7:00 PM",
+                lat: 3.4775775,
+                lng: -76.4932059,
+                mapsUrl: "https://maps.app.goo.gl/poBtYtC1koTTVtPv8",
+                mapsQuery: "Aromas+y+Fragancias+El+Perfume+Cra+62+Cali"
+            },
+            {
+                id: 27,
+                nombre: "Asadero y Restaurante Tauro",
+                imagen: "images/locales/asadero-tauro-fachada.jpeg",
+                banner: "images/locales/asadero-tauro-fachada.jpeg",
+                categoria: "Restaurante y asadero",
+                descripcion: "Asadero y Restaurante Tauro es el lugar ideal para disfrutar de los mejores asados, pollo a la brasa, carnes jugosas y almuerzos caseros. Contamos con menú del día, combos familiares y atención rápida para llevar o comer en el local.",
+                tags: ["#Asadero", "#Restaurante", "#Tauro", "#PolloAsado", "#Carnes", "#Almuerzos", "#MenuDelDia", "#ComidaCasera"],
+                direccion: "Cra. 62 #11-60, Cali",
+                horario: "7:00 AM - 8:00 PM",
+                lat: 3.4778893,
+                lng: -76.4931357,
+                mapsUrl: "https://maps.app.goo.gl/3yNgckPiZ4AoDg7VA",
+                mapsQuery: "Asadero+y+Restaurante+Tauro+Cra+62+Cali"
+            },
+            {
+                id: 28,
+                nombre: "Clínica de Ropa",
+                imagen: "images/locales/clinica-de-ropa-fachada.jpeg",
+                banner: "images/locales/clinica-de-ropa-fachada.jpeg",
+                categoria: "Sastrería y arreglos de ropa",
+                descripcion: "Clínica de Ropa es tu taller especializado en arreglos, confecciones y reparación de prendas de vestir. Servicios de costura, dobladillos, ajustes, cremalleras, parches y todo lo que tus prendas necesiten para quedar como nuevas.",
+                tags: ["#ClinicaDeRopa", "#Arreglos", "#Costura", "#Sastrería", "#Confecciones", "#Dobladillos", "#Cremalleras"],
+                direccion: "Cra. 62 #10-55, Cali",
+                horario: "8:00 AM - 6:00 PM",
+                lat: 3.4770404,
+                lng: -76.4933272,
+                mapsUrl: "https://maps.app.goo.gl/eDw4AAtj5LwAMDVc6",
+                mapsQuery: "Clinica+de+Ropa+Cra+62+Cali"
+            },
+            {
+                id: 29,
+                nombre: "Divas – Moda y Accesorios",
+                imagen: "images/locales/divas-fachada.jpeg",
+                banner: "images/locales/divas-fachada.jpeg",
+                categoria: "Moda femenina y accesorios",
+                descripcion: "Divas es la boutique de moda femenina donde encontrarás las últimas tendencias en ropa, accesorios, bolsos, joyería y calzado. Estilo y elegancia para la mujer moderna con las mejores marcas y precios.",
+                tags: ["#Divas", "#ModaFemenina", "#Accesorios", "#Bolsos", "#Joyería", "#Ropa", "#Tendencias"],
+                direccion: "Cra. 62 #11-08, Cali",
+                horario: "9:00 AM - 7:00 PM",
+                lat: 3.4777839,
+                lng: -76.4931563,
+                mapsUrl: "https://maps.app.goo.gl/yhBUZ2Amah1Bawp68",
+                mapsQuery: "Divas+moda+accesorios+Cra+62+Cali"
+            },
+            {
+                id: 30,
+                nombre: "El Garabato – Papelería y Miscelánea",
+                imagen: "images/locales/el-garabato-fachada.jpeg",
+                banner: "images/locales/el-garabato-fachada.jpeg",
+                categoria: "Papelería y miscelánea",
+                descripcion: "El Garabato es una papelería y miscelánea con todo lo que necesitas para el colegio, la oficina y el hogar. Cuadernos, útiles escolares, fotocopias, laminado, impresiones y artículos de oficina a los mejores precios.",
+                tags: ["#Papelería", "#ElGarabato", "#ÚtilesEscolares", "#Fotocopias", "#Impresiones", "#Miscelánea", "#Oficina"],
+                direccion: "Cra. 62 #10-75, Cali",
+                horario: "7:30 AM - 7:00 PM",
+                lat: 3.4772466,
+                lng: -76.4932762,
+                mapsUrl: "https://maps.app.goo.gl/aPDEB4fT8pEJgBXi9",
+                mapsQuery: "El+Garabato+papeleria+Cra+62+Cali"
+            },
+            {
+                id: 31,
+                nombre: "Fantastik – Piñatería y Desechables",
+                imagen: "images/locales/fantastik-fachada.jpeg",
+                banner: "images/locales/fantastik-fachada.jpeg",
+                categoria: "Piñatería y desechables",
+                descripcion: "Fantastik es tu tienda de piñatería, desechables, globos, decoración para fiestas y eventos. Encuentra todo para celebrar: piñatas, sorpresas, cotillones, manteles, vasos, platos y artículos temáticos para toda ocasión.",
+                tags: ["#Fantastik", "#Piñatería", "#Desechables", "#Globos", "#Fiestas", "#Decoración", "#Eventos"],
+                direccion: "Cra. 62 #11-22, Cali",
+                horario: "8:00 AM - 7:00 PM",
+                lat: 3.4772466,
+                lng: -76.4932762,
+                mapsUrl: "https://maps.app.goo.gl/BqSTrcDZaM4G3ZkF8",
+                mapsQuery: "Fantastik+pinateria+desechables+Cra+62+Cali"
+            },
+            {
+                id: 32,
+                nombre: "Farmacenter",
+                imagen: "images/locales/farmacenter-fachada.jpeg",
+                banner: "images/locales/farmacenter-fachada.jpeg",
+                categoria: "Farmacia y droguería",
+                descripcion: "Farmacenter es una droguería completa con medicamentos genéricos y de marca, productos de cuidado personal, artículos de aseo, vitaminas y suplementos. Atención farmacéutica profesional y precios económicos para tu salud.",
+                tags: ["#Farmacenter", "#Farmacia", "#Droguería", "#Medicamentos", "#Salud", "#CuidadoPersonal", "#Vitaminas"],
+                direccion: "Cra. 62 #10-42, Cali",
+                horario: "7:00 AM - 9:00 PM",
+                lat: 3.478276,
+                lng: -76.4930504,
+                mapsUrl: "https://maps.app.goo.gl/FirdtnRx7bpRG2RS9",
+                mapsQuery: "Farmacenter+Cra+62+Cali"
+            },
+            {
+                id: 33,
+                nombre: "Ferreléctricos",
+                imagen: "images/locales/ferrelectricos-fachada.jpeg",
+                banner: "images/locales/ferrelectricos-fachada.jpeg",
+                categoria: "Ferretería y eléctricos",
+                descripcion: "Ferreléctricos es tu ferretería especializada en materiales eléctricos, iluminación, cableado, interruptores, tomas, herramientas y artículos de ferretería en general. Todo lo que necesitas para tus proyectos eléctricos y de construcción.",
+                tags: ["#Ferreléctricos", "#Ferretería", "#Eléctricos", "#Iluminación", "#Cableado", "#Herramientas", "#Construcción"],
+                direccion: "Cra. 62 #11-28, Cali",
+                horario: "7:30 AM - 6:30 PM",
+                lat: 3.4776806,
+                lng: -76.4931804,
+                mapsUrl: "https://maps.app.goo.gl/SehRn6kwckZhZ6gF8",
+                mapsQuery: "Ferrelectricos+Cra+62+Cali"
+            },
+            {
+                id: 34,
+                nombre: "J Cell – Celulares y Accesorios",
+                imagen: "images/locales/j-cell-fachada.jpeg",
+                banner: "images/locales/j-cell-fachada.jpeg",
+                categoria: "Celulares y tecnología",
+                descripcion: "J Cell es tu tienda de tecnología donde encontrarás celulares nuevos y usados, accesorios, forros, vidrios templados, cargadores, audífonos, servicio técnico y recargas. Las mejores marcas a precios competitivos.",
+                tags: ["#JCell", "#Celulares", "#Accesorios", "#Tecnología", "#ServicioTécnico", "#Recargas", "#Forros", "#VidrioTemplado"],
+                direccion: "Cra. 62 #10-68, Cali",
+                horario: "8:00 AM - 7:00 PM",
+                lat: 3.4777839,
+                lng: -76.4931563,
+                mapsUrl: "https://maps.app.goo.gl/XtEpg47yV4vdd3Gq7",
+                mapsQuery: "J+Cell+celulares+accesorios+Cra+62+Cali"
+            },
+            {
+                id: 35,
+                nombre: "La Mundial de Accesorios",
+                imagen: "images/locales/la-mundial-accesorios-fachada.jpeg",
+                banner: "images/locales/la-mundial-accesorios-fachada.jpeg",
+                categoria: "Accesorios y bisutería",
+                descripcion: "La Mundial de Accesorios es tu tienda de accesorios, bisutería, relojes, gafas, bolsos, correas, billeteras y mucho más. Variedad de estilos para hombre y mujer con las últimas tendencias a los mejores precios.",
+                tags: ["#LaMundial", "#Accesorios", "#Bisutería", "#Relojes", "#Gafas", "#Bolsos", "#Correas", "#Billeteras"],
+                direccion: "Cra. 62 #11-38, Cali",
+                horario: "8:00 AM - 7:30 PM",
+                lat: 3.4772466,
+                lng: -76.4932762,
+                mapsUrl: "https://maps.app.goo.gl/HvieLyK3YVqkPWSD7",
+                mapsQuery: "La+Mundial+de+Accesorios+Cra+62+Cali"
+            },
+            {
+                id: 36,
+                nombre: "Natural Green – Tienda Naturista",
+                imagen: "images/locales/natural-green-fachada.jpeg",
+                banner: "images/locales/natural-green-fachada.jpeg",
+                categoria: "Tienda naturista y salud",
+                descripcion: "Natural Green es una tienda naturista con productos orgánicos, suplementos naturales, vitaminas, hierbas medicinales, tés, alimentos saludables y tratamientos alternativos. Cuida tu salud de forma natural.",
+                tags: ["#NaturalGreen", "#Naturista", "#ProductosOrgánicos", "#Suplementos", "#HierbasMedicinales", "#SaludNatural", "#Vitaminas"],
+                direccion: "Cra. 62 #10-48, Cali",
+                horario: "8:00 AM - 7:00 PM",
+                lat: 3.4772466,
+                lng: -76.4932762,
+                mapsUrl: "https://maps.app.goo.gl/hDN151uhB8HpSpxG6",
+                mapsQuery: "Natural+Green+tienda+naturista+Cra+62+Cali"
+            },
+            {
+                id: 37,
+                nombre: "Salsamentaria Chiminangos",
+                imagen: "images/locales/salsamentaria-chiminangos-fachada.jpeg",
+                banner: "images/locales/salsamentaria-chiminangos-fachada.jpeg",
+                categoria: "Salsamentaria y carnes frías",
+                descripcion: "Salsamentaria Chiminangos ofrece la mejor selección de carnes frías, embutidos, jamones, salchichas, quesos, lácteos y productos de salsamentaría de primera calidad. Frescura y sabor garantizado para tu mesa.",
+                tags: ["#Salsamentaria", "#Chiminangos", "#CarnesFrías", "#Embutidos", "#Jamones", "#Quesos", "#Lácteos", "#Salchichas"],
+                direccion: "Cra. 62 #11-42, Cali",
+                horario: "7:00 AM - 8:00 PM",
+                lat: 3.4773564,
+                lng: -76.4932591,
+                mapsUrl: "https://maps.app.goo.gl/RXmT75mH6T6TQmXSA",
+                mapsQuery: "Salsamentaria+Chiminangos+Cra+62+Cali"
+            },
+            {
+                id: 38,
+                nombre: "Zona Rosa – Ropa y Moda",
+                imagen: "images/locales/zona-rosa-fachada.jpeg",
+                banner: "images/locales/zona-rosa-fachada.jpeg",
+                categoria: "Ropa y moda",
+                descripcion: "Zona Rosa es la tienda de ropa y moda con las mejores tendencias para hombre y mujer. Jeans, camisetas, vestidos, chaquetas, calzado y accesorios de las marcas más reconocidas. Estilo urbano y casual a precios increíbles.",
+                tags: ["#ZonaRosa", "#Ropa", "#Moda", "#Jeans", "#Camisetas", "#Vestidos", "#Calzado", "#EstiloUrbano"],
+                direccion: "Cra. 62 #10-58, Cali",
+                horario: "9:00 AM - 7:00 PM",
+                lat: 3.4777839,
+                lng: -76.4931563,
+                mapsUrl: "https://maps.app.goo.gl/WCQwyFscvFehox2o6",
+                mapsQuery: "Zona+Rosa+ropa+moda+Cra+62+Cali"
+            }
+        ];
+
+        // ========= UBICACIÓN EN GOOGLE MAPS =========
+        // Cada local cuenta con su propia ubicación y Street View en Google Maps
+        const DEFAULT_LAT = 3.4764675;
+        const DEFAULT_LNG = -76.493484;
+
+        // ========= USER LOCATION & DISTANCE LOGIC =========
+        const urlParams = new URLSearchParams(window.location.search);
+        let userLocation = urlParams.get('ubicacion') || localStorage.getItem('proximity_user_location') || '';
+        let userLocationLabel = localStorage.getItem('proximity_user_label') || userLocation;
+        let userCoords = null;
+
+        try {
+            const storedCoords = localStorage.getItem('proximity_user_coords');
+            if (storedCoords) {
+                userCoords = JSON.parse(storedCoords);
+            }
+        } catch (e) {
+            console.warn(e);
+        }
+
+        if (urlParams.get('ubicacion')) {
+            localStorage.setItem('proximity_user_location', urlParams.get('ubicacion'));
+            localStorage.setItem('proximity_user_label', urlParams.get('ubicacion'));
+        }
+
+        const userLocationTextEl = document.getElementById('userLocationText');
+
+        function updateUserLocationUI() {
+            if (userLocationLabel) {
+                userLocationTextEl.textContent = userLocationLabel;
+            } else if (userLocation) {
+                userLocationTextEl.textContent = userLocation;
+            } else {
+                userLocationTextEl.textContent = 'No establecida (Google Maps usará tu ubicación en tiempo real)';
+            }
+        }
+        updateUserLocationUI();
+
+        // Distance math (Haversine formula)
+        function deg2rad(deg) {
+            return deg * (Math.PI / 180);
+        }
+
+        function getDistanceKm(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Earth radius in km
+            const dLat = deg2rad(lat2 - lat1);
+            const dLon = deg2rad(lon2 - lon1);
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+
+        function formatDistance(distKm) {
+            if (distKm === null || distKm === undefined || isNaN(distKm)) {
+                return null;
+            }
+            if (distKm < 1) {
+                const meters = Math.round(distKm * 1000);
+                const walkingMin = Math.max(1, Math.round(meters / 80));
+                return {
+                    text: `A ${meters} m`,
+                    subtext: `~${walkingMin} min a pie`,
+                    meters: meters
+                };
+            } else {
+                const km = distKm.toFixed(1);
+                const driveMin = Math.max(2, Math.round(distKm * 2.5));
+                return {
+                    text: `A ${km} km`,
+                    subtext: `~${driveMin} min`,
+                    meters: Math.round(distKm * 1000)
+                };
+            }
+        }
+
+        // ========= GRID RENDERING =========
+        const grid = document.getElementById('localesGrid');
+        const tagsQuery = urlParams.get('tags');
+        const searchTags = tagsQuery ? tagsQuery.split(',').map(t => t.toLowerCase().trim()) : [];
+
+        const localesToRender = localesData.filter(local => {
+            if (searchTags.length === 0) return true;
+            const localTags = local.tags.map(t => t.toLowerCase().replace('#', ''));
+            return searchTags.some(searchTag => localTags.includes(searchTag.replace('#', '')));
+        });
+
+        function renderCards() {
+            grid.innerHTML = '';
+            if (localesToRender.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #666; padding: 40px;">No se encontraron locales con esas etiquetas.</div>';
+                return;
+            }
+
+            localesToRender.forEach((local) => {
+                const trueIndex = localesData.findIndex(l => l.id === local.id);
+                const card = document.createElement('div');
+                card.className = 'local-card';
+                card.setAttribute('data-index', trueIndex);
+
+                // Build hashtags HTML
+                const hashtagsHTML = local.tags.slice(0, 4).map(tag =>
+                    `<span class="card-hashtag">${tag}</span>`
+                ).join('');
+
+                // Distance badge
+                let distanceBadgeHTML = '';
+                if (userCoords && local.lat && local.lng) {
+                    const d = formatDistance(getDistanceKm(userCoords.lat, userCoords.lng, local.lat, local.lng));
+                    distanceBadgeHTML = `
+                        <div class="card-distance-badge">
+                            <span class="badge-dot"></span>
+                            <span><strong>${d.text}</strong> · ${d.subtext}</span>
+                        </div>
+                    `;
+                } else if (userLocation) {
+                    distanceBadgeHTML = `
+                        <div class="card-distance-badge">
+                            <span class="badge-dot"></span>
+                            <span>Ruta en Google Maps</span>
+                        </div>
+                    `;
+                } else {
+                    distanceBadgeHTML = `
+                        <div class="card-distance-badge">
+                            <span class="badge-dot"></span>
+                            <span>Ver distancia</span>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="img-wrapper">
+                        <img src="${local.imagen}" alt="${local.nombre}">
+                    </div>
+                    <div class="local-name">${local.nombre}</div>
+                    <div class="card-hashtags">${hashtagsHTML}</div>
+                    ${local.horario ? `<div class="card-hours-badge"><span class="hours-icon">🕐</span><span>Horario: ${local.horario}</span></div>` : ''}
+                    ${distanceBadgeHTML}
+                `;
+                card.addEventListener('click', () => openModal(trueIndex));
+                grid.appendChild(card);
+            });
+
+            initObserver();
+        }
+
+        renderCards();
+
+        // ========= MODAL LOGIC =========
+        const overlay = document.getElementById('modalOverlay');
+        const modalClose = document.getElementById('modalClose');
+        const modalBanner = document.getElementById('modalBanner');
+        const modalBannerImg = document.getElementById('modalBannerImg');
+        const modalBannerName = document.getElementById('modalBannerName');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalCategory = document.getElementById('modalCategory');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalTags = document.getElementById('modalTags');
+        const modalAddress = document.getElementById('modalAddress');
+        const modalDistance = document.getElementById('modalDistance');
+        const modalMapsBtn = document.getElementById('modalMapsBtn');
+        const modalStreetViewBtn = document.getElementById('modalStreetViewBtn');
+
+        function openModal(index) {
+            const local = localesData[index];
+
+            // Set banner
+            if (local.banner) {
+                modalBanner.style.display = 'block';
+                modalBannerImg.src = local.banner;
+                modalBannerImg.alt = local.nombre + ' - Banner';
+                modalBannerName.textContent = local.nombre;
+            } else {
+                modalBanner.style.display = 'none';
+            }
+
+            modalImage.src = local.imagen;
+            modalImage.alt = local.nombre;
+            modalTitle.textContent = local.nombre;
+            modalCategory.textContent = local.categoria;
+            modalDescription.textContent = local.descripcion;
+
+            // Render tags
+            modalTags.innerHTML = '';
+            local.tags.forEach(tag => {
+                const span = document.createElement('span');
+                span.className = 'modal-tag';
+                span.textContent = tag;
+                modalTags.appendChild(span);
+            });
+
+            // Set address & distance
+            modalAddress.textContent = local.direccion ? `${local.direccion} (Comuna 5, Cali)` : `Comuna 5, Cali`;
+            if (userCoords && local.lat && local.lng) {
+                const d = formatDistance(getDistanceKm(userCoords.lat, userCoords.lng, local.lat, local.lng));
+                modalDistance.innerHTML = `Estás a <strong>${d.text}</strong> de este local (${d.subtext})`;
+            } else if (userLocation) {
+                modalDistance.innerHTML = `Ruta trazada desde: <strong>${userLocationLabel || userLocation}</strong>`;
+            } else {
+                modalDistance.innerHTML = `Google Maps calculará qué tan lejos estás según tu GPS`;
+            }
+
+            // Set hours in modal
+            const existingHoursBox = document.getElementById('modalHoursBox');
+            if (existingHoursBox) existingHoursBox.remove();
+            if (local.horario) {
+                const hoursBox = document.createElement('div');
+                hoursBox.className = 'modal-hours-box';
+                hoursBox.id = 'modalHoursBox';
+                hoursBox.innerHTML = `
+                    <span class="modal-hours-icon">🕐</span>
+                    <div>
+                        <span class="modal-hours-label">Horarios de atención</span>
+                        <span class="modal-hours-value">${local.horario}</span>
+                    </div>
+                `;
+                const proximityBox = document.getElementById('modalProximityBox');
+                proximityBox.parentNode.insertBefore(hoursBox, proximityBox);
+            }
+
+            // Build Google Maps Directions Link (origin & destination)
+            let originQuery = 'Current+Location';
+            if (userCoords) {
+                originQuery = `${userCoords.lat},${userCoords.lng}`;
+            } else if (userLocation) {
+                originQuery = encodeURIComponent(userLocation);
+            }
+            modalMapsBtn.href = `https://www.google.com/maps/dir/?api=1&origin=${originQuery}&destination=${local.lat || DEFAULT_LAT},${local.lng || DEFAULT_LNG}`;
+            if (modalStreetViewBtn) {
+                modalStreetViewBtn.href = local.mapsUrl || `https://www.google.com/maps/@${local.lat || DEFAULT_LAT},${local.lng || DEFAULT_LNG},19z`;
+            }
+
+            // Show modal
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        modalClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeModal();
+        });
+
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                closeModal();
+            }
+        });
+
+        // ========= LOCATION MODAL & GPS HANDLERS =========
+        const locationModalOverlay = document.getElementById('locationModalOverlay');
+        const locationModalClose = document.getElementById('locationModalClose');
+        const btnChangeLocation = document.getElementById('btnChangeLocation');
+        const btnGpsLocales = document.getElementById('btnGpsLocales');
+        const btnGpsModal = document.getElementById('btnGpsModal');
+        const btnSaveManualLocation = document.getElementById('btnSaveManualLocation');
+        const manualLocationInput = document.getElementById('manualLocationInput');
+
+        function openLocationModal() {
+            manualLocationInput.value = userLocationLabel || userLocation || '';
+            locationModalOverlay.classList.add('active');
+        }
+
+        function closeLocationModal() {
+            locationModalOverlay.classList.remove('active');
+        }
+
+        btnChangeLocation.addEventListener('click', openLocationModal);
+        locationModalClose.addEventListener('click', closeLocationModal);
+        locationModalOverlay.addEventListener('click', (e) => {
+            if (e.target === locationModalOverlay) closeLocationModal();
+        });
+
+        function applyGpsLocation(triggerBtn) {
+            if (!navigator.geolocation) {
+                alert('Tu navegador no soporta geolocalización.');
+                return;
+            }
+            if (triggerBtn) {
+                triggerBtn.disabled = true;
+                triggerBtn.textContent = 'Obteniendo GPS...';
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    const coordsStr = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+                    userLocation = coordsStr;
+                    userCoords = { lat, lng };
+                    userLocationLabel = `📍 Mi ubicación GPS (${coordsStr})`;
+
+                    localStorage.setItem('proximity_user_location', coordsStr);
+                    localStorage.setItem('proximity_user_coords', JSON.stringify(userCoords));
+                    localStorage.setItem('proximity_user_label', userLocationLabel);
+
+                    updateUserLocationUI();
+                    renderCards();
+                    closeLocationModal();
+
+                    if (triggerBtn) {
+                        triggerBtn.disabled = false;
+                        triggerBtn.textContent = '🎯 Usar GPS';
+                    }
+                },
+                (err) => {
+                    alert('No se pudo acceder a tu GPS. Por favor escribe tu dirección manualmente.');
+                    if (triggerBtn) {
+                        triggerBtn.disabled = false;
+                        triggerBtn.textContent = '🎯 Usar GPS';
+                    }
+                    console.warn(err);
+                },
+                { enableHighAccuracy: true, timeout: 8000 }
+            );
+        }
+
+        btnGpsLocales.addEventListener('click', () => applyGpsLocation(btnGpsLocales));
+        btnGpsModal.addEventListener('click', () => applyGpsLocation(btnGpsModal));
+
+        btnSaveManualLocation.addEventListener('click', () => {
+            const val = manualLocationInput.value.trim();
+            if (val) {
+                userLocation = val;
+                userLocationLabel = val;
+                userCoords = null; // Reset coords if manual text entered
+
+                localStorage.setItem('proximity_user_location', val);
+                localStorage.setItem('proximity_user_label', val);
+                localStorage.removeItem('proximity_user_coords');
+
+                updateUserLocationUI();
+                renderCards();
+                closeLocationModal();
+            } else {
+                alert('Por favor escribe una dirección válida.');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                closeLocationModal();
+            }
+        });
+
+        // ========= SCROLL ANIMATION =========
+        function initObserver() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.local-card').forEach(card => {
+                observer.observe(card);
+            });
+        }
+    </script>
+</body>
+
+</html>

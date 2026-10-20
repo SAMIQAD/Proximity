@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 115" width="100%" height="100%">
+  <defs>
+    <filter id="logoShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <g filter="url(#logoShadow)">
+    <!-- Left Person (Head & Body/Heart Half) -->
+    <circle cx="33" cy="20" r="7.5" fill="#143d34"/>
+    <path d="M 50,43
+             C 41,31 22,32 15,45
+             C 7,59 13,74 35,82
+             C 43,85 48,79 50,73
+             C 53,66 61,84 72,99"
+          fill="none" stroke="#143d34" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+          
+    <!-- Right Person (Head & Body/Heart Half) -->
+    <circle cx="67" cy="20" r="7.5" fill="#1f574b"/>
+    <path d="M 50,43
+             C 59,31 78,32 85,45
+             C 93,59 87,74 65,82
+             C 57,85 52,79 50,73
+             C 47,66 39,84 28,99"
+          fill="none" stroke="#1f574b" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

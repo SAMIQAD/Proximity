@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proximity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ============ BACKGROUND IMAGE (BLURRED HD) ============ */
+        .page-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .page-bg-image {
+            position: absolute;
+            top: -25px;
+            left: -25px;
+            right: -25px;
+            bottom: -25px;
+            background-image: url('images/bg-cali.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            filter: blur(5px) brightness(0.88) saturate(1.15);
+            transform: scale(1.04);
+        }
+
+        .page-bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(20, 35, 55, 0.42) 0%, rgba(42, 157, 143, 0.18) 50%, rgba(15, 23, 42, 0.48) 100%);
+        }
+
+        /* ============ MAIN HERO SECTION ============ */
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* ============ DECORATIVE ORGANIC SHAPES (SVG background) ============ */
+        .bg-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.35;
+        }
+
+        /* ============ NAVBAR ============ */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 50px;
+            background: rgba(255, 255, 255, 0.22);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 55px;
+        }
+
+        .logo-text {
+            font-size: 30px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-links {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+            background: rgba(255, 255, 255, 0.28);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 40px;
+            padding: 5px 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            z-index: 1;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #1a2a3a;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 8px 18px;
+            border-radius: 25px;
+            transition: all 0.25s ease;
+            display: inline-block;
+        }
+
+        .nav-links li a:hover {
+            color: #0f766e;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .nav-links li a.active {
+            color: #ffffff;
+            background: rgba(42, 157, 143, 0.85);
+            font-weight: 600;
+            box-shadow: 0 3px 12px rgba(42, 157, 143, 0.35);
+        }
+
+        /* ============ CONTENT AREA ============ */
+        .content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 45px;
+            padding: 40px 30px;
+            flex: 1;
+            max-width: 1050px;
+            margin: auto;
+            width: 100%;
+        }
+
+        /* ============ INTRO TEXT CARD ============ */
+        .text-card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 18px;
+            padding: 38px 40px;
+            width: 440px;
+            max-width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .text-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 42px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+        }
+
+        .tagline {
+            font-size: 24px;
+            font-weight: 700;
+            font-style: italic;
+            color: #1a2a3a;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+            line-height: 1.35;
+        }
+
+        .description {
+            font-size: 15px;
+            font-weight: 400;
+            color: #2c3e50;
+            line-height: 1.75;
+            margin-bottom: 25px;
+            max-width: 380px;
+        }
+
+        .arrow-btn {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            border: 2px solid rgba(42, 157, 143, 0.7);
+            background: rgba(255, 255, 255, 0.6);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-decoration: none;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .arrow-btn:hover {
+            background: linear-gradient(135deg, #2a9d8f, #21867a);
+            border-color: #2a9d8f;
+            transform: translateY(-3px) scale(1.08);
+            box-shadow: 0 8px 24px rgba(42, 157, 143, 0.45);
+        }
+
+        .arrow-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: #1a2a3a;
+            stroke-width: 2.2;
+            fill: none;
+            transition: stroke 0.3s ease, transform 0.3s ease;
+        }
+
+        .arrow-btn:hover svg {
+            stroke: #fff;
+            transform: translateX(4px);
+        }
+
+        /* ============ SEARCH FORM CARD ============ */
+        .form-card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 16px;
+            padding: 30px 35px 35px;
+            width: 400px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            background: #e8e8e8;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            color: #333;
+            outline: none;
+            transition: background 0.3s;
+        }
+
+        .input-location-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-location-wrapper input[type="text"] {
+            padding-right: 90px !important;
+        }
+
+        .btn-gps {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 7px 11px;
+            background: linear-gradient(135deg, #2a9d8f, #21867a);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(42, 157, 143, 0.25);
+        }
+
+        .btn-gps:hover {
+            background: linear-gradient(135deg, #32b5a6, #279b8e);
+            transform: translateY(-50%) scale(1.03);
+        }
+
+        .btn-gps:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .location-status {
+            font-size: 11.5px;
+            margin-top: 6px;
+            color: #1a7a6d;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group textarea:focus {
+            background: #ddd;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .form-col {
+            flex: 1;
+        }
+
+        .form-col label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .custom-select select {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            background: #e8e8e8;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            color: #333;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        .custom-select::after {
+            content: '';
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 7px solid #888;
+            pointer-events: none;
+        }
+
+        .form-group textarea {
+            height: 110px;
+            resize: none;
+        }
+
+        /* ============ TAG/CHIP INPUT (Viñetas) ============ */
+        .tags-container {
+            background: #e8e8e8;
+            border-radius: 8px;
+            padding: 10px 12px;
+            min-height: 110px;
+            max-height: 180px;
+            overflow-y: auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            gap: 8px;
+            cursor: text;
+            transition: background 0.3s;
+        }
+
+        .tags-container:focus-within {
+            background: #ddd;
+        }
+
+        .tag-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 5px 10px 5px 14px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            color: #2c3e50;
+            animation: tagIn 0.2s ease;
+        }
+
+        @keyframes tagIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .tag-item::before {
+            content: '•';
+            color: #2a9d8f;
+            font-size: 16px;
+            font-weight: 700;
+            margin-right: 2px;
+        }
+
+        .tag-remove {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: #999;
+            line-height: 1;
+            padding: 0 2px;
+            border-radius: 50%;
+            transition: color 0.2s, background 0.2s;
+            font-family: sans-serif;
+        }
+
+        .tag-remove:hover {
+            color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        .tag-input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            color: #333;
+            flex: 1;
+            min-width: 120px;
+            padding: 4px 0;
+        }
+
+        .tag-input::placeholder {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 5px;
+        }
+
+        .btn-buscar {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #2a9d8f 0%, #21867a 100%);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(42, 157, 143, 0.3);
+        }
+
+        .btn-buscar:hover {
+            background: linear-gradient(135deg, #32b5a6 0%, #279b8e 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(42, 157, 143, 0.4);
+        }
+
+        .btn-buscar span {
+            font-size: 16px;
+        }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            background: #0a0a0a;
+            padding: 18px 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 12px;
+            font-weight: 500;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 900px) {
+            .content {
+                flex-direction: column;
+                align-items: center;
+                gap: 35px;
+                padding: 30px 20px;
+            }
+
+            .text-card {
+                width: 100%;
+                max-width: 440px;
+                padding: 30px 24px;
+            }
+
+            .form-card {
+                width: 100%;
+                max-width: 440px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 12px;
+                padding: 14px 20px;
+            }
+
+            .nav-links {
+                position: static;
+                transform: none;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 4px;
+                padding: 4px 8px;
+            }
+
+            .nav-links li a {
+                padding: 6px 14px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============ BACKGROUND IMAGE (BLURRED HD) ============ -->
+    <div class="page-bg" aria-hidden="true">
+        <div class="page-bg-image"></div>
+        <div class="page-bg-overlay"></div>
+    </div>
+
+    <!-- ============ HERO SECTION ============ -->
+    <section class="hero" id="inicio">
+
+        <!-- Decorative organic shapes -->
+        <svg class="bg-shapes" viewBox="0 0 1200 700" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Large organic blob top-left -->
+            <path d="M-50,80 Q100,20 200,120 Q300,220 250,350 Q200,480 50,400 Q-100,320 -80,200 Z"
+                  fill="none" stroke="rgba(140,165,185,0.4)" stroke-width="2.5"/>
+            <!-- Curved swoosh across the middle -->
+            <path d="M-30,500 Q150,300 350,380 Q550,460 700,300 Q850,140 950,250 Q1050,360 1200,280"
+                  fill="none" stroke="rgba(140,165,185,0.35)" stroke-width="2"/>
+            <!-- Small loop top-right area -->
+            <path d="M380,30 Q420,100 480,60 Q540,20 500,-30"
+                  fill="none" stroke="rgba(140,165,185,0.3)" stroke-width="2"/>
+            <!-- Gentle curve bottom -->
+            <path d="M100,650 Q400,550 600,620 Q800,690 1100,580"
+                  fill="none" stroke="rgba(140,165,185,0.25)" stroke-width="2"/>
+            <!-- Blob shape center-left -->
+            <path d="M80,180 Q180,80 320,160 Q400,220 350,340 Q280,440 150,380 Q40,300 80,180 Z"
+                  fill="rgba(150,175,195,0.15)" stroke="rgba(140,165,185,0.3)" stroke-width="1.5"/>
+        </svg>
+
+        <!-- Navigation -->
+        <nav>
+            <div class="logo-container">
+                <!-- Proximity Logo Icon (heart + people) -->
+                <svg class="logo-icon" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));">
+                    <!-- Left Person (Head & Left Heart/Leg) -->
+                    <circle cx="33" cy="20" r="7.5" fill="#143d34" />
+                    <path d="M 50,43 C 41,31 22,32 15,45 C 7,59 13,74 35,82 C 43,85 48,79 50,73 C 53,66 61,84 72,99"
+                          fill="none" stroke="#143d34" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" />
+                          
+                    <!-- Right Person (Head & Right Heart/Leg) -->
+                    <circle cx="67" cy="20" r="7.5" fill="#1f574b" />
+                    <path d="M 50,43 C 59,31 78,32 85,45 C 93,59 87,74 65,82 C 57,85 52,79 50,73 C 47,66 39,84 28,99"
+                          fill="none" stroke="#1f574b" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="logo-text">Proximity</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">INICIO</a></li>
+                <li><a href="locales.html">LOCALES</a></li>
+                <li><a href="sobre-nosotros.html">SOBRE NOSOTROS</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Left Side: Text Card -->
+            <div class="text-card">
+                <h2 class="tagline">Conexión · Comunidad · Progreso</h2>
+                <p class="description">
+                    Explora, descubre y conecta con los mejores locales
+                    cerca de ti. Encuentra desde tiendas, locales y
+                    restaurantes hasta servicios variados en la zona.
+                </p>
+                <a href="locales.html" class="arrow-btn" id="btnArrowExplore" aria-label="Ir a locales" title="Explorar locales">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="4" y1="12" x2="20" y2="12"/>
+                        <polyline points="14,6 20,12 14,18"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Right Side: Search Form Card -->
+            <div class="form-card">
+                <div class="form-group">
+                    <label for="direccion">Tu dirección o ubicación</label>
+                    <div class="input-location-wrapper">
+                        <input type="text" id="direccion" name="direccion" placeholder="Ej: Cra. 62 #10-20, Cali o usa GPS...">
+                        <button type="button" class="btn-gps" id="btnGps" title="Detectar mi ubicación actual con GPS">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path>
+                            </svg>
+                            <span>GPS</span>
+                        </button>
+                    </div>
+                    <div class="location-status" id="locationStatus" style="display: none;"></div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label>Etiquetas de b&uacute;squeda</label>
+                    <div class="tags-container" id="tagsContainer">
+                        <input type="text" class="tag-input" id="tagInput" 
+                               placeholder="Escribe y presiona Enter o selecciona abajo...">
+                    </div>
+                    <div class="available-tags" id="availableTags" style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px;">
+                        <!-- Populate with JS -->
+                    </div>
+                </div>
+
+                <div class="btn-container">
+                    <button class="btn-buscar">
+                        BUSCAR <span>➤</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <span class="footer-text">Proximity.co</span>
+    </footer>
+
+    <script>
+        const tagsContainer = document.getElementById('tagsContainer');
+        const tagInput = document.getElementById('tagInput');
+        const availableTagsContainer = document.getElementById('availableTags');
+        const tags = [];
+
+        // predefined popular tags that match locales.html
+        const predefinedTags = [
+            "Hamburguesas", "Asados", "Comida rápida", "Licores", "Naturista", "Mascotas", 
+            "Farmacia", "Ropa", "Belleza", "Accesorios", "Ferretería", "Minimarket"
+        ];
+
+        // Render predefined tags
+        function renderAvailableTags() {
+            availableTagsContainer.innerHTML = '';
+            predefinedTags.forEach(tag => {
+                const tagEl = document.createElement('span');
+                tagEl.className = 'tag-item';
+                tagEl.style.cursor = 'pointer';
+                tagEl.style.backgroundColor = '#f0f0f0';
+                tagEl.style.border = '1px solid #ccc';
+                tagEl.style.padding = '4px 10px';
+                tagEl.style.borderRadius = '20px';
+                tagEl.style.fontSize = '12px';
+                tagEl.style.fontFamily = "'Poppins', sans-serif";
+                tagEl.style.color = '#333';
+                tagEl.textContent = '+ ' + tag;
+                tagEl.onclick = () => {
+                    if (!tags.includes(tag.toLowerCase())) {
+                        addTag(tag);
+                    }
+                };
+                availableTagsContainer.appendChild(tagEl);
+            });
+        }
+        renderAvailableTags();
+
+        // Focus input when clicking on the container
+        tagsContainer.addEventListener('click', (e) => {
+            if (e.target === tagsContainer || e.target === tagInput) {
+                tagInput.focus();
+            }
+        });
+
+        // Add tag on Enter key
+        tagInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const value = tagInput.value.trim();
+                if (value && !tags.includes(value.toLowerCase())) {
+                    addTag(value);
+                    tagInput.value = '';
+                }
+            }
+            // Remove last tag on Backspace if input is empty
+            if (e.key === 'Backspace' && tagInput.value === '' && tags.length > 0) {
+                removeTag(tags.length - 1);
+            }
+        });
+
+        function addTag(text) {
+            tags.push(text.toLowerCase());
+
+            const tagEl = document.createElement('span');
+            tagEl.className = 'tag-item';
+            tagEl.textContent = text;
+
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'tag-remove';
+            removeBtn.innerHTML = '✕';
+            removeBtn.type = 'button';
+            removeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const index = Array.from(tagsContainer.querySelectorAll('.tag-item:not(#availableTags .tag-item)')).indexOf(tagEl);
+                if (index !== -1) {
+                    removeTag(index);
+                }
+            });
+
+            tagEl.appendChild(removeBtn);
+            tagsContainer.insertBefore(tagEl, tagInput);
+        }
+
+        function removeTag(index) {
+            const tagElements = tagsContainer.querySelectorAll('.tag-item:not(#availableTags .tag-item)');
+            if (tagElements[index]) {
+                tagElements[index].remove();
+                tags.splice(index, 1);
+            }
+        }
+
+        // ========= LOCATION PERSISTENCE & GPS =========
+        const direccionInput = document.getElementById('direccion');
+        const btnGps = document.getElementById('btnGps');
+        const locationStatus = document.getElementById('locationStatus');
+
+        // Restore saved location if exists
+        const savedLoc = localStorage.getItem('proximity_user_location');
+        const savedLabel = localStorage.getItem('proximity_user_label');
+        if (savedLoc) {
+            direccionInput.value = savedLabel || savedLoc;
+            locationStatus.innerHTML = '<span>✓</span> Ubicación guardada para Google Maps';
+            locationStatus.style.display = 'flex';
+        }
+
+        // GPS handler
+        btnGps.addEventListener('click', () => {
+            if (!navigator.geolocation) {
+                alert('Tu navegador no soporta geolocalización.');
+                return;
+            }
+            btnGps.disabled = true;
+            locationStatus.innerHTML = '<span>⏳</span> Obteniendo ubicación GPS...';
+            locationStatus.style.display = 'flex';
+
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    const coordsStr = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+                    const label = `📍 Mi ubicación actual (${coordsStr})`;
+                    direccionInput.value = label;
+                    localStorage.setItem('proximity_user_location', coordsStr);
+                    localStorage.setItem('proximity_user_coords', JSON.stringify({ lat, lng }));
+                    localStorage.setItem('proximity_user_label', label);
+                    locationStatus.innerHTML = '<span>✓</span> Ubicación GPS guardada con éxito';
+                    btnGps.disabled = false;
+                },
+                (err) => {
+                    btnGps.disabled = false;
+                    locationStatus.innerHTML = '<span>⚠️</span> No se pudo acceder al GPS. Puedes escribir tu dirección manual.';
+                    console.warn(err);
+                },
+                { enableHighAccuracy: true, timeout: 8000 }
+            );
+        });
+
+        // Typing in input
+        direccionInput.addEventListener('input', () => {
+            const val = direccionInput.value.trim();
+            if (val) {
+                localStorage.setItem('proximity_user_location', val);
+                localStorage.setItem('proximity_user_label', val);
+                localStorage.removeItem('proximity_user_coords');
+                locationStatus.innerHTML = '<span>✓</span> Ubicación guardada para Google Maps';
+                locationStatus.style.display = 'flex';
+            } else {
+                localStorage.removeItem('proximity_user_location');
+                localStorage.removeItem('proximity_user_coords');
+                localStorage.removeItem('proximity_user_label');
+                locationStatus.style.display = 'none';
+            }
+        });
+
+        // Handle Search button
+        document.querySelector('.btn-buscar').addEventListener('click', (e) => {
+            e.preventDefault();
+            const val = direccionInput.value.trim();
+            if (val) {
+                localStorage.setItem('proximity_user_location', val);
+                localStorage.setItem('proximity_user_label', val);
+            }
+            const queryParams = new URLSearchParams();
+            if (tags.length > 0) {
+                queryParams.set('tags', tags.join(','));
+            }
+            if (val) {
+                queryParams.set('ubicacion', val);
+            }
+            window.location.href = `locales.html?${queryParams.toString()}`;
+        });
+
+        // Handle Arrow button to explore next page
+        const arrowExploreBtn = document.getElementById('btnArrowExplore');
+        if (arrowExploreBtn) {
+            arrowExploreBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const val = direccionInput.value.trim();
+                if (val) {
+                    localStorage.setItem('proximity_user_location', val);
+                    localStorage.setItem('proximity_user_label', val);
+                }
+                const queryParams = new URLSearchParams();
+                if (tags.length > 0) {
+                    queryParams.set('tags', tags.join(','));
+                }
+                if (val) {
+                    queryParams.set('ubicacion', val);
+                }
+                const q = queryParams.toString();
+                window.location.href = q ? `locales.html?${q}` : 'locales.html';
+            });
+        }
+    </script>
+
+</body>
+</html>
