@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proximity</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -438,8 +441,15 @@
         }
 
         @keyframes tagIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .tag-item::before {
@@ -575,8 +585,59 @@
                 font-size: 12px;
             }
         }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 10px 14px;
+                gap: 8px;
+            }
+
+            .logo-icon {
+                width: 38px;
+                height: 42px;
+            }
+
+            .logo-text {
+                font-size: 24px;
+            }
+
+            .nav-links {
+                padding: 3px 6px;
+                gap: 2px;
+            }
+
+            .nav-links li a {
+                padding: 5px 11px;
+                font-size: 11px;
+                letter-spacing: 0.8px;
+            }
+
+            .content {
+                padding: 20px 14px;
+                gap: 22px;
+            }
+
+            .text-card {
+                padding: 22px 18px;
+                border-radius: 16px;
+            }
+
+            .tagline {
+                font-size: 22px;
+            }
+
+            .description {
+                font-size: 13.5px;
+            }
+
+            .form-card {
+                padding: 22px 18px;
+                border-radius: 16px;
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <!-- ============ BACKGROUND IMAGE (BLURRED HD) ============ -->
@@ -591,36 +652,39 @@
         <!-- Decorative organic shapes -->
         <svg class="bg-shapes" viewBox="0 0 1200 700" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
             <!-- Large organic blob top-left -->
-            <path d="M-50,80 Q100,20 200,120 Q300,220 250,350 Q200,480 50,400 Q-100,320 -80,200 Z"
-                  fill="none" stroke="rgba(140,165,185,0.4)" stroke-width="2.5"/>
+            <path d="M-50,80 Q100,20 200,120 Q300,220 250,350 Q200,480 50,400 Q-100,320 -80,200 Z" fill="none"
+                stroke="rgba(140,165,185,0.4)" stroke-width="2.5" />
             <!-- Curved swoosh across the middle -->
-            <path d="M-30,500 Q150,300 350,380 Q550,460 700,300 Q850,140 950,250 Q1050,360 1200,280"
-                  fill="none" stroke="rgba(140,165,185,0.35)" stroke-width="2"/>
+            <path d="M-30,500 Q150,300 350,380 Q550,460 700,300 Q850,140 950,250 Q1050,360 1200,280" fill="none"
+                stroke="rgba(140,165,185,0.35)" stroke-width="2" />
             <!-- Small loop top-right area -->
-            <path d="M380,30 Q420,100 480,60 Q540,20 500,-30"
-                  fill="none" stroke="rgba(140,165,185,0.3)" stroke-width="2"/>
+            <path d="M380,30 Q420,100 480,60 Q540,20 500,-30" fill="none" stroke="rgba(140,165,185,0.3)"
+                stroke-width="2" />
             <!-- Gentle curve bottom -->
-            <path d="M100,650 Q400,550 600,620 Q800,690 1100,580"
-                  fill="none" stroke="rgba(140,165,185,0.25)" stroke-width="2"/>
+            <path d="M100,650 Q400,550 600,620 Q800,690 1100,580" fill="none" stroke="rgba(140,165,185,0.25)"
+                stroke-width="2" />
             <!-- Blob shape center-left -->
             <path d="M80,180 Q180,80 320,160 Q400,220 350,340 Q280,440 150,380 Q40,300 80,180 Z"
-                  fill="rgba(150,175,195,0.15)" stroke="rgba(140,165,185,0.3)" stroke-width="1.5"/>
+                fill="rgba(150,175,195,0.15)" stroke="rgba(140,165,185,0.3)" stroke-width="1.5" />
         </svg>
 
         <!-- Navigation -->
         <nav>
             <div class="logo-container">
                 <!-- Proximity Logo Icon (heart + people) -->
-                <svg class="logo-icon" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));">
+                <svg class="logo-icon" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg"
+                    style="filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));">
                     <!-- Left Person (Head & Left Heart/Leg) -->
                     <circle cx="33" cy="20" r="7.5" fill="#143d34" />
                     <path d="M 50,43 C 41,31 22,32 15,45 C 7,59 13,74 35,82 C 43,85 48,79 50,73 C 53,66 61,84 72,99"
-                          fill="none" stroke="#143d34" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" />
-                          
+                        fill="none" stroke="#143d34" stroke-width="7.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+
                     <!-- Right Person (Head & Right Heart/Leg) -->
                     <circle cx="67" cy="20" r="7.5" fill="#1f574b" />
                     <path d="M 50,43 C 59,31 78,32 85,45 C 93,59 87,74 65,82 C 57,85 52,79 50,73 C 47,66 39,84 28,99"
-                          fill="none" stroke="#1f574b" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" />
+                        fill="none" stroke="#1f574b" stroke-width="7.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
                 </svg>
                 <span class="logo-text">Proximity</span>
             </div>
@@ -641,10 +705,11 @@
                     cerca de ti. Encuentra desde tiendas, locales y
                     restaurantes hasta servicios variados en la zona.
                 </p>
-                <a href="locales.html" class="arrow-btn" id="btnArrowExplore" aria-label="Ir a locales" title="Explorar locales">
+                <a href="locales.html" class="arrow-btn" id="btnArrowExplore" aria-label="Ir a locales"
+                    title="Explorar locales">
                     <svg viewBox="0 0 24 24">
-                        <line x1="4" y1="12" x2="20" y2="12"/>
-                        <polyline points="14,6 20,12 14,18"/>
+                        <line x1="4" y1="12" x2="20" y2="12" />
+                        <polyline points="14,6 20,12 14,18" />
                     </svg>
                 </a>
             </div>
@@ -654,9 +719,11 @@
                 <div class="form-group">
                     <label for="direccion">Tu dirección o ubicación</label>
                     <div class="input-location-wrapper">
-                        <input type="text" id="direccion" name="direccion" placeholder="Ej: Cra. 62 #10-20, Cali o usa GPS...">
+                        <input type="text" id="direccion" name="direccion"
+                            placeholder="Ej: Cra. 62 #10-20, Cali o usa GPS...">
                         <button type="button" class="btn-gps" id="btnGps" title="Detectar mi ubicación actual con GPS">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="3"></circle>
                                 <path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path>
                             </svg>
@@ -671,10 +738,11 @@
                 <div class="form-group">
                     <label>Etiquetas de b&uacute;squeda</label>
                     <div class="tags-container" id="tagsContainer">
-                        <input type="text" class="tag-input" id="tagInput" 
-                               placeholder="Escribe y presiona Enter o selecciona abajo...">
+                        <input type="text" class="tag-input" id="tagInput"
+                            placeholder="Escribe y presiona Enter o selecciona abajo...">
                     </div>
-                    <div class="available-tags" id="availableTags" style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px;">
+                    <div class="available-tags" id="availableTags"
+                        style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px;">
                         <!-- Populate with JS -->
                     </div>
                 </div>
@@ -701,7 +769,7 @@
 
         // predefined popular tags that match locales.html
         const predefinedTags = [
-            "Hamburguesas", "Asados", "Comida rápida", "Licores", "Naturista", "Mascotas", 
+            "Hamburguesas", "Asados", "Comida rápida", "Licores", "Naturista", "Mascotas",
             "Farmacia", "Ropa", "Belleza", "Accesorios", "Ferretería", "Minimarket"
         ];
 
@@ -889,4 +957,5 @@
     </script>
 
 </body>
+
 </html>
